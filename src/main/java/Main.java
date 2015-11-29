@@ -1,17 +1,25 @@
 import com.google.inject.Injector;
 import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateExceptionHandler;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
+import org.eclipse.xtext.util.CancelIndicator;
+import org.eclipse.xtext.validation.CheckMode;
 import org.eclipse.xtext.validation.IResourceValidator;
+import org.eclipse.xtext.validation.Issue;
 import org.xtext.rplsd.cvdsl.CvDslStandaloneSetup;
 import org.xtext.rplsd.cvdsl.cvDsl.*;
 import org.xtext.rplsd.cvdsl.cvDsl.Biodata;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -32,8 +40,20 @@ public class Main {
         IResourceValidator iResourceValidator = injector.getInstance(IResourceValidator.class);
         XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
         resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
-
         Resource resource = resourceSet.getResource(URI.createURI("grammar/input.cvdsl"), true);
+        List<Issue> issues = iResourceValidator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl);
+        if (issues.size() != 0) {
+            for (Issue issue : issues) {
+                System.err.println(issue);
+            }
+            System.exit(1);
+        }
+
+        // Create your Configuration instance, and specify if up to what FreeMarker
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
+        cfg.setDirectoryForTemplateLoading(new File("html/"));
+        cfg.setDefaultEncoding("UTF-8");
+        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 
         CvRoot model = (CvRoot) resource.getContents().get(0);
 
@@ -92,6 +112,23 @@ public class Main {
                 workExperienceTemplate.setCity(((WorkExperience) e).getCity());
                 workExperiences.add(workExperienceTemplate);
             }
+        }
+
+        Map<String, Object> root = new HashMap<>();
+        root.put("biodata", biodata);
+        root.put("academics", academics);
+        root.put("languages", languages);
+        root.put("expertises", expertises);
+        root.put("organizationExperiences", organizationExperiences);
+        root.put("committees", committees);
+        root.put("workExperiences", workExperiences);
+
+        Template temp = cfg.getTemplate("index.ftl");
+        Writer out = new OutputStreamWriter(new FileOutputStream("html/index-cv.html"));
+        try {
+            temp.process(root, out);
+        } catch (Exception e) {
+            
         }
     }
 }
