@@ -69,7 +69,8 @@ public class Main {
                 biodata.setNationality(((Biodata) e).getNationality());
                 biodata.setPhoto(((Biodata) e).getPhoto_path());
                 List<SocialMediaTemplate> socialMediaTemplateList = ((Biodata) e).getSocialmedias().stream().map(socialMedia ->
-                        new SocialMediaTemplate("dummy", socialMedia.getAccount())).collect(Collectors.toList());
+                        new SocialMediaTemplate(socialMedia.getType().getName(), socialMedia.getAccount())).collect(Collectors.toList());
+                biodata.setSummary(((Biodata) e).getSummary());
                 biodata.setSocialMedias(socialMediaTemplateList);
             } else if (e instanceof Academic) {
                 AcademicTemplate academicTemplate = new AcademicTemplate();
@@ -94,6 +95,7 @@ public class Main {
                 organizationExperienceTemplate.setUntil(((OrganizationExperience) e).getDuration().getUntil());
                 organizationExperienceTemplate.setPosition(((OrganizationExperience) e).getPosition());
                 organizationExperienceTemplate.setCity(((OrganizationExperience) e).getCity());
+                organizationExperienceTemplate.setInfos(((OrganizationExperience) e).getInfo().stream().collect(Collectors.toList()));
                 organizationExperiences.add(organizationExperienceTemplate);
             } else if (e instanceof Committee) {
                 CommitteeTemplate committeeTemplate = new CommitteeTemplate();
@@ -102,6 +104,7 @@ public class Main {
                 committeeTemplate.setPosition(((Committee) e).getPosition());
                 committeeTemplate.setFrom(((Committee) e).getDuration().getFrom());
                 committeeTemplate.setUntil(((Committee) e).getDuration().getUntil());
+                committeeTemplate.setInfos(((Committee) e).getInfo().stream().collect(Collectors.toList()));
                 committees.add(committeeTemplate);
             } else if (e instanceof WorkExperience) {
                 WorkExperienceTemplate workExperienceTemplate = new WorkExperienceTemplate();
@@ -110,25 +113,38 @@ public class Main {
                 workExperienceTemplate.setUntil(((WorkExperience) e).getDuration().getUntil());
                 workExperienceTemplate.setPosition(((WorkExperience) e).getPosition());
                 workExperienceTemplate.setCity(((WorkExperience) e).getCity());
+                workExperienceTemplate.setInfos(((WorkExperience) e).getInfo().stream().collect(Collectors.toList()));
                 workExperiences.add(workExperienceTemplate);
             }
         }
 
         Map<String, Object> root = new HashMap<>();
         root.put("biodata", biodata);
-        root.put("academics", academics);
-        root.put("languages", languages);
-        root.put("expertises", expertises);
-        root.put("organizationExperiences", organizationExperiences);
-        root.put("committees", committees);
-        root.put("workExperiences", workExperiences);
+        if(!academics.isEmpty()) {
+            root.put("academics", academics);
+        }
+        if(!languages.isEmpty()) {
+            root.put("languages", languages);
+        }
+        if(!expertises.isEmpty()) {
+            root.put("expertises", expertises);
+        }
+        if(!organizationExperiences.isEmpty()) {
+            root.put("organizationExperiences", organizationExperiences);
+        }
+        if(!committees.isEmpty()) {
+            root.put("committees", committees);
+        }
+        if(!workExperiences.isEmpty()) {
+            root.put("workExperiences", workExperiences);
+        }
 
         Template temp = cfg.getTemplate("index.ftl");
         Writer out = new OutputStreamWriter(new FileOutputStream("html/index-cv.html"));
         try {
             temp.process(root, out);
         } catch (Exception e) {
-            
+
         }
     }
 }

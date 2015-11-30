@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class OrganizationExperienceTemplate {
 
     private String name;
@@ -9,6 +11,8 @@ public class OrganizationExperienceTemplate {
     private String position;
 
     private String city;
+
+    private List<String> infos;
 
     public String getName() {
         return name;
@@ -49,6 +53,10 @@ public class OrganizationExperienceTemplate {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public List<String> getInfos() { return infos; }
+
+    public void setInfos(List<String> infos) { this.infos = infos; }
 
     public void print() {
         System.out.println(name);

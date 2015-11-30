@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class CommitteeTemplate {
 
     private String name;
@@ -9,6 +11,8 @@ public class CommitteeTemplate {
     private String from;
 
     private String until;
+
+    private List<String> infos;
 
     public String getName() {
         return name;
@@ -49,6 +53,10 @@ public class CommitteeTemplate {
     public void setUntil(String until) {
         this.until = until;
     }
+
+    public List<String> getInfos() { return infos; }
+
+    public void setInfos(List<String> infos) { this.infos = infos; }
 
     public void print() {
         System.out.println(name);

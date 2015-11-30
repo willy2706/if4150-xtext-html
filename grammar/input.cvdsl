@@ -1,46 +1,35 @@
-biodata "Winson Waisakurnia"{
+biodata "Example Example" {
 	place_of_birth "Medan"
-	email "winson_w94@hotmail.com"
-	date_of_birth "25 May 1994"
-	Instagram "winson"
-	Facebook "winson_w"
+	email "example@hotmail.com"
+	date_of_birth "25 June 1994"
+	Instagram "example94"
+	Facebook "example_94"
 	gender Male
+	phone "+62812345678"
+	nationality "Indonesia"
+	photo "http://simpleicon.com/wp-content/uploads/user1.png"
+	summary "Example is a hardworking person."
 }
 
-language "English"{
+language "English" {
 	level "A1" 
 	test "Tofel" score "50"
-	test "Ielts" score "40.0"
+	test "Ielts" score "40.5"
 }
 
-expertise "Word"
-expertise "Excel"
-
-organization "aaa" {
-	from "November 2015"
-	position "manager"
-	city "jakarta"
-}
-
-committee "bbb" {
-	organization "zzzz"
-	position "xxx"
-	from "2029 aa"
-}
-
-academic "Name" {
-	level "String"
-	from "November 2015" until "December 2015"
-}
-
-work "Bukalapak"{
+work "Bukalapak" {
 	position "Software Engineer"
-	from "June 2015" until "August 2015"
-	info "Work as Software Engineer"
-	info "Additional info"
+	from "June 2015"
+city "Jakarta"
+	info "Work as backend engineer in payment department"
+	info "Payment Platform Lead"
 }
 
-work "Bukalapak"{
-	position "Software Engineer"
-	from "June 2015" until "August 2015"
+organization "HMIF" {
+	position "Secretary"
+	from "June 2014" until "June 2015"
+	city "Bandung"
+	info "Perform routine clerical and administrative functions such as
+   drafting correspondence"
+	info "organizing and maintaining paper and electronic files"
 }

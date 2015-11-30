@@ -19,6 +19,8 @@ public class BiodataTemplate {
 
     private String photo;
 
+    private String summary;
+
     private List<SocialMediaTemplate> socialMedias = new ArrayList<>();
 
     public String getName() {
@@ -84,6 +86,10 @@ public class BiodataTemplate {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
+    public String getSummary() { return summary; }
+
+    public void setSummary(String summary) { this.summary = summary; }
 
     public List<SocialMediaTemplate> getSocialMedias() {
         return socialMedias;
