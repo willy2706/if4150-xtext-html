@@ -36,11 +36,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        // Argumen harus 3, yang pertama berisi input dsl, yang kedua berisi template ftl
-        // contoh : main grammar/input.cvdsl html/index.ftl html/index.html
-        if(args.length != 3) {
+        // Argumen harus 2, yang pertama berisi input dsl, yang kedua berisi output html
+        // contoh : main grammar/input.cvdsl html/index.html
+        // index.ftl harus selalu sefolder dengan .jar
+        if(args.length != 2) {
             System.err.println("Not enough argument, argument should be : ");
-            System.err.println("<input dsl> <input ftl> <output html>");
+            System.err.println("<input dsl> <output html>");
             System.exit(2);
         }
 
@@ -59,11 +60,7 @@ public class Main {
 
         // Create your Configuration instance, and specify if up to what FreeMarker
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
-        if(args[1].lastIndexOf("/") != -1) {
-            cfg.setDirectoryForTemplateLoading(new File(args[1].substring(0, args[1].lastIndexOf("/"))));
-        } else {
-            cfg.setDirectoryForTemplateLoading(new File(System.getProperty("user.dir")));
-        }
+        cfg.setDirectoryForTemplateLoading(new File(System.getProperty("user.dir")));
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 
@@ -151,17 +148,12 @@ public class Main {
             root.put("workExperiences", workExperiences);
         }
 
-        Template temp;
-        if(args[1].lastIndexOf("/") != -1) {
-            temp = cfg.getTemplate(args[1].substring(args[1].lastIndexOf("/")+1));
-        } else {
-            temp = cfg.getTemplate(args[1]);
-        }
-        Writer out = new OutputStreamWriter(new FileOutputStream(args[2]));
+        Template temp = cfg.getTemplate("index.ftl");
+        Writer out = new OutputStreamWriter(new FileOutputStream(args[1]));
         try {
             temp.process(root, out);
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 }
