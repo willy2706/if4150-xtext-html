@@ -1,5 +1,4 @@
 import com.google.inject.Injector;
-import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
@@ -36,11 +35,20 @@ public class Main {
     private static List<WorkExperienceTemplate> workExperiences = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
+
+        // Argumen harus 3, yang pertama berisi input dsl, yang kedua berisi template ftl
+        // contoh : main grammar/input.cvdsl html/index.ftl html/index.html
+        if(args.length != 3) {
+            System.err.println("Not enough argument, argument should be : ");
+            System.err.println("<input dsl> <input ftl> <output html>");
+            System.exit(2);
+        }
+
         Injector injector = new CvDslStandaloneSetup().createInjectorAndDoEMFRegistration();
         IResourceValidator iResourceValidator = injector.getInstance(IResourceValidator.class);
         XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
         resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
-        Resource resource = resourceSet.getResource(URI.createURI("grammar/input.cvdsl"), true);
+        Resource resource = resourceSet.getResource(URI.createURI(args[0]), true);
         List<Issue> issues = iResourceValidator.validate(resource, CheckMode.ALL, CancelIndicator.NullImpl);
         if (issues.size() != 0) {
             for (Issue issue : issues) {
@@ -51,7 +59,11 @@ public class Main {
 
         // Create your Configuration instance, and specify if up to what FreeMarker
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
-        cfg.setDirectoryForTemplateLoading(new File("html/"));
+        if(args[1].lastIndexOf("/") != -1) {
+            cfg.setDirectoryForTemplateLoading(new File(args[1].substring(0, args[1].lastIndexOf("/"))));
+        } else {
+            cfg.setDirectoryForTemplateLoading(new File(System.getProperty("user.dir")));
+        }
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 
@@ -139,8 +151,13 @@ public class Main {
             root.put("workExperiences", workExperiences);
         }
 
-        Template temp = cfg.getTemplate("index.ftl");
-        Writer out = new OutputStreamWriter(new FileOutputStream("html/index-cv.html"));
+        Template temp;
+        if(args[1].lastIndexOf("/") != -1) {
+            temp = cfg.getTemplate(args[1].substring(args[1].lastIndexOf("/")+1));
+        } else {
+            temp = cfg.getTemplate(args[1]);
+        }
+        Writer out = new OutputStreamWriter(new FileOutputStream(args[2]));
         try {
             temp.process(root, out);
         } catch (Exception e) {
