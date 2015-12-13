@@ -77,8 +77,10 @@ public class Main {
                 biodata.setPhone(((Biodata) e).getPhone());
                 biodata.setNationality(((Biodata) e).getNationality());
                 biodata.setPhoto(((Biodata) e).getPhoto_path());
-                List<SocialMediaTemplate> socialMediaTemplateList = ((Biodata) e).getSocialmedias().stream().map(socialMedia ->
-                        new SocialMediaTemplate(socialMedia.getType().getName(), socialMedia.getAccount())).collect(Collectors.toList());
+                List<SocialMediaTemplate> socialMediaTemplateList = new ArrayList<>();
+                for(SocialMedia socialMedia : ((Biodata) e).getSocialmedias()) {
+                    socialMediaTemplateList.add(new SocialMediaTemplate(socialMedia.getType().getName(), socialMedia.getAccount()));
+                }
                 biodata.setSummary(((Biodata) e).getSummary());
                 biodata.setSocialMedias(socialMediaTemplateList);
             } else if (e instanceof Academic) {
@@ -92,8 +94,10 @@ public class Main {
                 academicTemplate.setGpa(((Academic) e).getGpa());
                 academics.add(academicTemplate);
             } else if (e instanceof Language) {
-                List<LanguageTestTemplate> languageTestTemplates = ((Language) e).getTests().stream().map(languageTest ->
-                        new LanguageTestTemplate(languageTest.getTest_name(), languageTest.getScore())).collect(Collectors.toList());
+                List<LanguageTestTemplate> languageTestTemplates = new ArrayList<>();
+                for(LanguageTest languageTest : ((Language) e).getTests()) {
+                    languageTestTemplates.add(new LanguageTestTemplate(languageTest.getTest_name(), languageTest.getScore()));
+                }
                 languages.add(new LanguageTemplate(e.getName(), ((Language) e).getLevel(), languageTestTemplates));
             } else if (e instanceof  Expertise) {
                 expertises.add(new ExpertiseTemplate(e.getName()));

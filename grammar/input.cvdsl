@@ -20,7 +20,7 @@ language "English" {
 work "Bukalapak" {
 	position "Software Engineer"
 	from "June 2015"
-city "Jakarta"
+	city "Jakarta"
 	info "Work as backend engineer in payment department"
 	info "Payment Platform Lead"
 }
@@ -29,7 +29,6 @@ organization "HMIF" {
 	position "Secretary"
 	from "June 2014" until "June 2015"
 	city "Bandung"
-	info "Perform routine clerical and administrative functions such as
-   drafting correspondence"
+	info "Perform routine clerical and administrative functions such asdrafting correspondence"
 	info "organizing and maintaining paper and electronic files"
 }
