@@ -2,6 +2,7 @@ import com.google.inject.Injector;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.resource.XtextResource;
@@ -108,7 +109,11 @@ public class Main {
                 organizationExperienceTemplate.setUntil(((OrganizationExperience) e).getDuration().getUntil());
                 organizationExperienceTemplate.setPosition(((OrganizationExperience) e).getPosition());
                 organizationExperienceTemplate.setCity(((OrganizationExperience) e).getCity());
-                organizationExperienceTemplate.setInfos(((OrganizationExperience) e).getInfo().stream().collect(Collectors.toList()));
+                List<String> stringList = new ArrayList<>();
+                for (String s : ((OrganizationExperience) e).getInfo()) {
+                    stringList.add(s);
+                }
+                organizationExperienceTemplate.setInfos(stringList);
                 organizationExperiences.add(organizationExperienceTemplate);
             } else if (e instanceof Committee) {
                 CommitteeTemplate committeeTemplate = new CommitteeTemplate();
@@ -117,7 +122,11 @@ public class Main {
                 committeeTemplate.setPosition(((Committee) e).getPosition());
                 committeeTemplate.setFrom(((Committee) e).getDuration().getFrom());
                 committeeTemplate.setUntil(((Committee) e).getDuration().getUntil());
-                committeeTemplate.setInfos(((Committee) e).getInfo().stream().collect(Collectors.toList()));
+                List<String> stringList = new ArrayList<>();
+                for (String s : ((Committee) e).getInfo()) {
+                    stringList.add(s);
+                }
+                committeeTemplate.setInfos(stringList);
                 committees.add(committeeTemplate);
             } else if (e instanceof WorkExperience) {
                 WorkExperienceTemplate workExperienceTemplate = new WorkExperienceTemplate();
@@ -126,7 +135,11 @@ public class Main {
                 workExperienceTemplate.setUntil(((WorkExperience) e).getDuration().getUntil());
                 workExperienceTemplate.setPosition(((WorkExperience) e).getPosition());
                 workExperienceTemplate.setCity(((WorkExperience) e).getCity());
-                workExperienceTemplate.setInfos(((WorkExperience) e).getInfo().stream().collect(Collectors.toList()));
+                List<String> stringList = new ArrayList<>();
+                for (String s : ((WorkExperience) e).getInfo()) {
+                    stringList.add(s);
+                }
+                workExperienceTemplate.setInfos(stringList);
                 workExperiences.add(workExperienceTemplate);
             }
         }
