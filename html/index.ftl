@@ -34,37 +34,39 @@
         <div class="entry">
           <#if biodata.photo ??>
           <!-- Begin Image -->
-          <img class="portrait" src="${biodata.photo}" alt="John Smith" />
+          <img class="portrait" src="${biodata.photo}" alt="${biodata.name}" />
           <!-- End Image -->
           </#if>
           <!-- Begin Personal Information -->
           <div class="self">
-            <h1 class="name">${biodata.name} <br />
-              <span>Interactive Designer</span></h1>
+            <h1 class="name">${biodata.name} <br /></h1>
             <ul>
-              <li class="ad">111 Lorem Street, 34785, Ipsum City</li>
               <li class="mail">${biodata.email}</li>
               <#if biodata.phone ??><li class="tel">${biodata.phone}</li></#if>
-              <li class="web">www.businessweb.com</li>
+              <#if biodata.socialMedias??>
+                  <#list biodata.socialMedias as socialmedia>
+                      <li class="web">${socialmedia}</li>
+                  </#list>
+              </#if>
             </ul>
           </div>
           <!-- End Personal Information -->
-          <!-- Begin Social -->
-          <div class="social">
-            <ul>
-              <li><a class='north' href="#" title="Download .pdf"><img src="images/icn-save.jpg" alt="Download the pdf version" /></a></li>
-              <li><a class='north' href="javascript:window.print()" title="Print"><img src="images/icn-print.jpg" alt="" /></a></li>
-              <li><a class='north' id="contact" href="contact/index.html" title="Contact Me"><img src="images/icn-contact.jpg" alt="" /></a></li>
-              <li><a class='north social_facebook ' href="#" title="Facebook"><img src="images/icn-facebook.jpg" alt="" /> </a></li>
-              <li><a class='north' href="#" title="Follow me on Twitter"><img src="images/icn-twitter.jpg" alt="" /></a></li> 
-              <li><a class='north' href="#" title="Instagram"><img src="images/icn-facebook.jpg" alt="" /></a></li>
-              <li><a class='north' href="#" title="LinkedIn"><img src="images/icn-facebook.jpg" alt="" /></a></li>
-              <li><a class='north' href="#" title="Path"><img src="images/icn-facebook.jpg" alt="" /></a></li>
-              <li><a class='north' href="#" title="Line"><img src="images/icn-facebook.jpg" alt="" /></a></li>
+          <#--<!-- Begin Social &ndash;&gt;-->
+          <#--<div class="social">-->
+            <#--<ul>-->
+              <#--<li><a class='north' href="#" title="Download .pdf"><img src="images/icn-save.jpg" alt="Download the pdf version" /></a></li>-->
+              <#--<li><a class='north' href="javascript:window.print()" title="Print"><img src="images/icn-print.jpg" alt="" /></a></li>-->
+              <#--<li><a class='north' id="contact" href="contact/index.html" title="Contact Me"><img src="images/icn-contact.jpg" alt="" /></a></li>-->
+              <#--<li><a class='north social_facebook ' href="#" title="Facebook"><img src="images/icn-facebook.jpg" alt="" /> </a></li>-->
+              <#--<li><a class='north' href="#" title="Follow me on Twitter"><img src="images/icn-twitter.jpg" alt="" /></a></li> -->
+              <#--<li><a class='north' href="#" title="Instagram"><img src="images/icn-facebook.jpg" alt="" /></a></li>-->
+              <#--<li><a class='north' href="#" title="LinkedIn"><img src="images/icn-facebook.jpg" alt="" /></a></li>-->
+              <#--<li><a class='north' href="#" title="Path"><img src="images/icn-facebook.jpg" alt="" /></a></li>-->
+              <#--<li><a class='north' href="#" title="Line"><img src="images/icn-facebook.jpg" alt="" /></a></li>-->
 
-            </ul>
-          </div>
-          <!-- End Social -->
+            <#--</ul>-->
+          <#--</div>-->
+          <#--<!-- End Social &ndash;&gt;-->
         </div>
         <!-- Begin 1st Row -->
         <#if biodata.summary??>
@@ -81,7 +83,7 @@
           <#list academics as academic>
             <div class="content">
               <h3>${academic.from} <#if academic.until??> - ${academic.until} <#else> - present </#if></h3>
-              <p>${academic.name} <#if academic.city ??>, ${academic.city} </#if>  <br />
+              <p>${academic.name}<#if academic.city ??>, ${academic.city} </#if>  <br />
                 <#if academic.major??>
                   <em>${academic.level} in ${academic.major}
                   <#if academic.gpa ??>
@@ -102,7 +104,7 @@
           <#list workExperiences as work>
           <div class="content">
             <h3>${work.from} <#if work.until??> - ${work.until} <#else> - present  </#if></h3>
-            <p>${work.name} <#if work.city??>, ${work.city} </#if> <br />
+            <p>${work.name}<#if work.city??>, ${work.city} </#if> <br />
               <em>${work.position}</em>
             </p>
             <#if work.infos ??>
@@ -124,7 +126,7 @@
           <#list organizationExperiences as organization>
           <div class="content">
             <h3>${organization.from}<#if organization.until ??> - ${organization.until} <#else> - present  </#if></h3>
-            <p>${organization.name} <#if organization.city??>, ${organization.city} </#if> <br />
+            <p>${organization.name}<#if organization.city??>, ${organization.city} </#if> <br />
               <em>${organization.position}</em>
             </p>
             <#if organization.infos ??>
@@ -197,21 +199,21 @@
         </div>
         </#if>
         <!-- End 6th Row -->
-         <!-- Begin 5th Row -->
-        <div class="entry">
-        <h2>WORKS</h2>
-        	<ul class="works">
-        		<li><a href="images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>
-        		<li><a href="images/2.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>
-        		<li><a href="images/3.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>
-        		<li><a href="images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>
-        		<li><a href="images/2.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>
-        		<li><a href="images/3.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>
-        		<li><a href="images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>
-        		<li><a href="images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>
-        	</ul>
-        </div>
-        <!-- Begin 5th Row -->
+         <#--<!-- Begin 5th Row &ndash;&gt;-->
+        <#--<div class="entry">-->
+        <#--<h2>WORKS</h2>-->
+        	<#--<ul class="works">-->
+        		<#--<li><a href="images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>-->
+        		<#--<li><a href="images/2.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>-->
+        		<#--<li><a href="images/3.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>-->
+        		<#--<li><a href="images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>-->
+        		<#--<li><a href="images/2.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>-->
+        		<#--<li><a href="images/3.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>-->
+        		<#--<li><a href="images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>-->
+        		<#--<li><a href="images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="images/image.jpg" alt="" /></a></li>-->
+        	<#--</ul>-->
+        <#--</div>-->
+        <#--<!-- Begin 5th Row &ndash;&gt;-->
       </div>
       <div class="clear"></div>
       <div class="paper-bottom"></div>
