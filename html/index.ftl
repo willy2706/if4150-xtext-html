@@ -41,6 +41,7 @@
           <div class="self">
             <h1 class="name">${biodata.name} <br /></h1>
             <ul>
+              <li class="">${biodata.placeOfBirth}, ${biodata.dateOfBirth}</li>
               <li class="mail">${biodata.email}</li>
               <#if biodata.phone ??><li class="tel">${biodata.phone}</li></#if>
               <#if biodata.socialMedias??>
@@ -48,6 +49,8 @@
                       <li class="web">${socialmedia}</li>
                   </#list>
               </#if>
+              <li class="">${biodata.gender}</li>
+              <li class="">${biodata.nationality}</li>
             </ul>
           </div>
           <!-- End Personal Information -->
